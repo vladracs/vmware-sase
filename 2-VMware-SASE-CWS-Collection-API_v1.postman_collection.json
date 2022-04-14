@@ -1,0 +1,545 @@
+{
+	"info": {
+		"_postman_id": "24c86e85-d196-4554-b3ad-862df9060fdc",
+		"name": "2-VMware-SASE-CWS-Collection-API_v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST DATA",
+			"item": [
+				{
+					"name": "Configure a CWS Security Policy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"cwsPolicyGUId\", jsonData.id);",
+									"console.log(pm.environment.get(\"cwsPolicyGUId\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"CWS-Policy2\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{url}}/api/cws/v1/enterprises/{{enterpriseGUId}}/cwsPolicies",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cws",
+								"v1",
+								"enterprises",
+								"{{enterpriseGUId}}",
+								"cwsPolicies"
+							]
+						},
+						"description": "Get all edges using API v2 style - with token"
+					},
+					"response": []
+				},
+				{
+					"name": "Add new SSL Bypass Rule",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"ruleIndex\":0,\"rule\":{\"name\":\"MS domain2\",\"action\":{\"value\":\"BYPASS\"},\"attributes\":{\"destination\":{\"type\":\"FQDN\",\"fqdns\":[\"microsoft.com\"]},\"tags\":[],\"reason\":\"trusted domain\"}}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{url}}/api/cws/v1/enterprises/{{enterpriseGUId}}/cwsPolicies/{{cwsPolicyGUId}}/sslInspectionRules",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cws",
+								"v1",
+								"enterprises",
+								"{{enterpriseGUId}}",
+								"cwsPolicies",
+								"{{cwsPolicyGUId}}",
+								"sslInspectionRules"
+							]
+						},
+						"description": "Get all edges using API v2 style - with token"
+					},
+					"response": []
+				},
+				{
+					"name": "Add new Web Security - URL Filtering Rule",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"rule\":{\"name\":\"No_Hacking2\",\"action\":{\"value\":\"BLOCK\"},\"attributes\":{\"userEntity\":{\"all\":true,\"users\":[],\"userGroups\":[]},\"fqdns\":[],\"categories\":[\"Hacking\"],\"threats\":[],\"tags\":[],\"reason\":\"no hacks\"}},\"ruleIndex\":0}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{url}}/api/cws/v1/enterprises/{{enterpriseGUId}}/cwsPolicies/{{cwsPolicyGUId}}/urlFilteringRules",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cws",
+								"v1",
+								"enterprises",
+								"{{enterpriseGUId}}",
+								"cwsPolicies",
+								"{{cwsPolicyGUId}}",
+								"urlFilteringRules"
+							]
+						},
+						"description": "Get all edges using API v2 style - with token"
+					},
+					"response": []
+				},
+				{
+					"name": "Publish New CWS Policy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{url}}/api/cws/v1/enterprises/{{enterpriseGUId}}/cwsPolicies/{{cwsPolicyGUId}}?action=publish",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cws",
+								"v1",
+								"enterprises",
+								"{{enterpriseGUId}}",
+								"cwsPolicies",
+								"{{cwsPolicyGUId}}"
+							],
+							"query": [
+								{
+									"key": "action",
+									"value": "publish"
+								}
+							]
+						},
+						"description": "Get all edges using API v2 style - with token"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GET DATA",
+			"item": [
+				{
+					"name": "Get CWS logs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{url}}/api/cws/v1/enterprises/{{enterpriseGUId}}/logs?start=1631479181&_count=true&limit=102&_filterSpec=true",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cws",
+								"v1",
+								"enterprises",
+								"{{enterpriseGUId}}",
+								"logs"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "1631479181"
+								},
+								{
+									"key": "_count",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "102"
+								},
+								{
+									"key": "_filterSpec",
+									"value": "true"
+								}
+							]
+						},
+						"description": "Get all edges using API v2 style - with token"
+					},
+					"response": []
+				},
+				{
+					"name": "Get CWS Threats",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{url}}/api/cws/v1/enterprises/{{enterpriseGUId}}/threatOrigins?start=1630312705",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cws",
+								"v1",
+								"enterprises",
+								"{{enterpriseGUId}}",
+								"threatOrigins"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "1630312705"
+								}
+							]
+						},
+						"description": "Get all edges using API v2 style - with token"
+					},
+					"response": []
+				},
+				{
+					"name": "Get CWS Policies",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{url}}/api/cws/v1/enterprises/{{enterpriseGUId}}/cwsPolicies?fields=name,version,status,created,modified,isPublished,id,logicalId,enterpriseId,policyHeader&_count=true&limit=20&_filterSpec=true&filter=",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cws",
+								"v1",
+								"enterprises",
+								"{{enterpriseGUId}}",
+								"cwsPolicies"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "name,version,status,created,modified,isPublished,id,logicalId,enterpriseId,policyHeader"
+								},
+								{
+									"key": "_count",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "_filterSpec",
+									"value": "true"
+								},
+								{
+									"key": "filter",
+									"value": ""
+								}
+							]
+						},
+						"description": "Get all edges using API v2 style - with token"
+					},
+					"response": []
+				},
+				{
+					"name": "Get CWS Policies In Use",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{url}}/api/cws/v1/enterprises/{{enterpriseGUId}}/cwsPolicies?fields=name,status&_count=true&limit=20&_filterSpec=true&filter=",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cws",
+								"v1",
+								"enterprises",
+								"{{enterpriseGUId}}",
+								"cwsPolicies"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "name,status"
+								},
+								{
+									"key": "_count",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "_filterSpec",
+									"value": "true"
+								},
+								{
+									"key": "filter",
+									"value": ""
+								}
+							]
+						},
+						"description": "Get all edges using API v2 style - with token"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "REST - Get Enterprise id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"//console.log(jsonData);",
+							"postman.setEnvironmentVariable(\"enterpriseGUId\", jsonData.logicalId);",
+							"console.log(pm.environment.get(\"enterpriseGUId\"));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}/portal/rest/enterprise/getEnterprise",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"portal",
+						"rest",
+						"enterprise",
+						"getEnterprise"
+					]
+				},
+				"description": "Get all edges using API v2 style - with token"
+			},
+			"response": []
+		}
+	]
+}
